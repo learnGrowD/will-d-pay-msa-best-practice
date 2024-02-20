@@ -1,7 +1,6 @@
 package com.willd.membershipservice.application.port.out;
 
-import com.willd.membershipservice.adapter.out.persistence.MembershipJpaEntity;
-import com.willd.domain.membership.Membership;
+import com.willd.membershipservice.domain.MembershipJpaEntity;
 
 public interface FindMembershipPort {
     MembershipJpaEntity findMembership(Long membershipId);

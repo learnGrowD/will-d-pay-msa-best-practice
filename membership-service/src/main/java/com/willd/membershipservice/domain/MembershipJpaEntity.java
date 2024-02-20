@@ -1,4 +1,4 @@
-package com.willd.membershipservice.adapter.out.persistence;
+package com.willd.membershipservice.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

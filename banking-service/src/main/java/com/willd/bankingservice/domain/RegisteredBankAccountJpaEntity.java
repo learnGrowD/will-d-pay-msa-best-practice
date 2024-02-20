@@ -1,11 +1,10 @@
-package com.willd.bankingservice.adapter.out.persistence;
+package com.willd.bankingservice.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.sql.exec.spi.StandardEntityInstanceResolver;
 
 @Table(name = "registered_bank_account")
 @Entity

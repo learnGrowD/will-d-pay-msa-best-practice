@@ -4,6 +4,7 @@ import com.willd.common.PersistenceAdapter;
 import com.willd.domain.remittance.enums.RemittanceRequestStatus;
 import com.willd.remittance.application.port.out.RemittanceRequestPort;
 import com.willd.domain.remittance.enums.RemittanceRequestType;
+import com.willd.remittance.domain.RemittanceRequestR2dbcEntity;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 

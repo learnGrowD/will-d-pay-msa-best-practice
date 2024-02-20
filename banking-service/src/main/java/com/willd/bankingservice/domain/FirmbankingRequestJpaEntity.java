@@ -1,4 +1,4 @@
-package com.willd.bankingservice.adapter.out.persistence;
+package com.willd.bankingservice.domain;
 
 import com.willd.domain.bank.enums.FirmbankingRequestStatus;
 import jakarta.persistence.Entity;

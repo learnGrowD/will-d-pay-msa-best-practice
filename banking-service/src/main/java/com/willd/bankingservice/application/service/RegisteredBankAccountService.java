@@ -1,7 +1,7 @@
 package com.willd.bankingservice.application.service;
 
 import com.willd.bankingservice.adapter.out.service.firmbanking.Firmbanking;
-import com.willd.bankingservice.adapter.out.persistence.RegisteredBankAccountJpaEntity;
+import com.willd.bankingservice.domain.RegisteredBankAccountJpaEntity;
 import com.willd.bankingservice.adapter.out.persistence.RegisteredBankAccountMapper;
 import com.willd.bankingservice.application.port.in.GetBankAccountByBankAccountNumberCommand;
 import com.willd.bankingservice.application.port.in.GetBankAccountByMembershipIdCommand;

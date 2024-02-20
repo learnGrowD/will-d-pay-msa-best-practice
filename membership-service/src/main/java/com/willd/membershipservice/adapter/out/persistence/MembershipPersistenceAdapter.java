@@ -4,7 +4,7 @@ import com.willd.common.PersistenceAdapter;
 import com.willd.membershipservice.application.port.out.FindMembershipPort;
 import com.willd.membershipservice.application.port.out.ModifyMembershipPort;
 import com.willd.membershipservice.application.port.out.RegisterMembershipPort;
-import com.willd.domain.membership.Membership;
+import com.willd.membershipservice.domain.MembershipJpaEntity;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter

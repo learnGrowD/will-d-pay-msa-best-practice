@@ -1,6 +1,7 @@
 package com.willd.bankingservice.adapter.out.persistence;
 
 import com.willd.bankingservice.application.port.out.RegisteredBankAccountPort;
+import com.willd.bankingservice.domain.RegisteredBankAccountJpaEntity;
 import com.willd.common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 

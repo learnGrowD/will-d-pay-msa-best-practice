@@ -1,6 +1,6 @@
 package com.willd.bankingservice.application.port.out;
 
-import com.willd.bankingservice.adapter.out.persistence.RegisteredBankAccountJpaEntity;
+import com.willd.bankingservice.domain.RegisteredBankAccountJpaEntity;
 
 public interface RegisteredBankAccountPort {
     RegisteredBankAccountJpaEntity createBankAccount(

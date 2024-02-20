@@ -2,7 +2,7 @@ package com.willd.bankingservice.application.service;
 
 import com.willd.bankingservice.adapter.out.service.firmbanking.RequestFirmbanking;
 import com.willd.bankingservice.adapter.out.service.firmbanking.RequestFirmbankingStatus;
-import com.willd.bankingservice.adapter.out.persistence.FirmbankingRequestJpaEntity;
+import com.willd.bankingservice.domain.FirmbankingRequestJpaEntity;
 import com.willd.bankingservice.adapter.out.persistence.FirmbankingRequestMapper;
 import com.willd.bankingservice.application.port.in.FirmbankingUseCase;
 import com.willd.bankingservice.application.port.in.RequestFirmbankingCommand;

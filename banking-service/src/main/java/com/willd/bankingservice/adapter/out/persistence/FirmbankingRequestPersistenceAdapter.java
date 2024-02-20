@@ -1,6 +1,7 @@
 package com.willd.bankingservice.adapter.out.persistence;
 
 import com.willd.bankingservice.application.port.out.FirmbankingRequestPort;
+import com.willd.bankingservice.domain.FirmbankingRequestJpaEntity;
 import com.willd.common.PersistenceAdapter;
 import com.willd.domain.bank.enums.FirmbankingRequestStatus;
 import lombok.RequiredArgsConstructor;

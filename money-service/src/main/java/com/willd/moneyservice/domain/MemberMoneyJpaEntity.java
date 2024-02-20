@@ -1,4 +1,4 @@
-package com.willd.moneyservice.adapter.out.persistence;
+package com.willd.moneyservice.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

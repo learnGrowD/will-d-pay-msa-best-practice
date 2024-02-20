@@ -1,6 +1,6 @@
 package com.willd.moneyservice.application.port.out;
 
-import com.willd.moneyservice.adapter.out.persistence.MemberMoneyJpaEntity;
+import com.willd.moneyservice.domain.MemberMoneyJpaEntity;
 
 public interface MemberMoneyPort {
     MemberMoneyJpaEntity getMemberMoney(Long membershipId);

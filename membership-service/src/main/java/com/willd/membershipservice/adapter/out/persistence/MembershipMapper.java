@@ -1,6 +1,7 @@
 package com.willd.membershipservice.adapter.out.persistence;
 
 import com.willd.domain.membership.Membership;
+import com.willd.membershipservice.domain.MembershipJpaEntity;
 import org.springframework.stereotype.Component;
 
 @Component

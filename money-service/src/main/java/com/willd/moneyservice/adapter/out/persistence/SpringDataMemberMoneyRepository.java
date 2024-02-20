@@ -1,5 +1,6 @@
 package com.willd.moneyservice.adapter.out.persistence;
 
+import com.willd.moneyservice.domain.MemberMoneyJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

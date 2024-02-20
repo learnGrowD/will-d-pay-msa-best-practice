@@ -1,9 +1,8 @@
 package com.willd.bankingservice.adapter.out.persistence;
 
+import com.willd.bankingservice.domain.FirmbankingRequestJpaEntity;
 import com.willd.domain.bank.FirmbankingRequest;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class FirmbankingRequestMapper {

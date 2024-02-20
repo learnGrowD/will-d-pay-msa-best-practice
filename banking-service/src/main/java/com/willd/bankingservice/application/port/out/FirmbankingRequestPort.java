@@ -1,6 +1,6 @@
 package com.willd.bankingservice.application.port.out;
 
-import com.willd.bankingservice.adapter.out.persistence.FirmbankingRequestJpaEntity;
+import com.willd.bankingservice.domain.FirmbankingRequestJpaEntity;
 import com.willd.domain.bank.enums.FirmbankingRequestStatus;
 
 public interface FirmbankingRequestPort {

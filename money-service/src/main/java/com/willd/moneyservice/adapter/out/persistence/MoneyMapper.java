@@ -2,6 +2,7 @@ package com.willd.moneyservice.adapter.out.persistence;
 
 import com.willd.domain.money.MemberMoney;
 import com.willd.domain.money.MoneyChargingRequest;
+import com.willd.moneyservice.domain.MemberMoneyJpaEntity;
 import org.springframework.stereotype.Component;
 
 @Component

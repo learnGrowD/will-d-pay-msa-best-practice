@@ -1,7 +1,7 @@
 package com.willd.membershipservice.application.service;
 
 import com.willd.common.UserCase;
-import com.willd.membershipservice.adapter.out.persistence.MembershipJpaEntity;
+import com.willd.membershipservice.domain.MembershipJpaEntity;
 import com.willd.membershipservice.adapter.out.persistence.MembershipMapper;
 import com.willd.membershipservice.application.port.in.RegisterMembershipCommand;
 import com.willd.membershipservice.application.port.in.RegisterMembershipUseCase;

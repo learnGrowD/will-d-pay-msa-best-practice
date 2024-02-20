@@ -3,6 +3,7 @@ package com.willd.remittance.adapter.out.persistence;
 import com.willd.domain.remittance.RemittanceRequest;
 import com.willd.domain.remittance.enums.RemittanceRequestStatus;
 import com.willd.domain.remittance.enums.RemittanceRequestType;
+import com.willd.remittance.domain.RemittanceRequestR2dbcEntity;
 import org.springframework.stereotype.Component;
 
 @Component

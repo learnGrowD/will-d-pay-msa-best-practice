@@ -2,6 +2,7 @@ package com.willd.moneyservice.adapter.out.persistence;
 
 import com.willd.common.PersistenceAdapter;
 import com.willd.moneyservice.application.port.out.MemberMoneyPort;
+import com.willd.moneyservice.domain.MemberMoneyJpaEntity;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter

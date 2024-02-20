@@ -6,7 +6,7 @@ import com.willd.domain.bank.RegisteredBankAccount;
 import com.willd.domain.bank.enums.FirmbankingRequestStatus;
 import com.willd.domain.membership.Membership;
 import com.willd.domain.money.enums.MoneyChargingRequestStatus;
-import com.willd.moneyservice.adapter.out.persistence.MemberMoneyJpaEntity;
+import com.willd.moneyservice.domain.MemberMoneyJpaEntity;
 import com.willd.moneyservice.adapter.out.persistence.MoneyChargingRequestJpaEntity;
 import com.willd.moneyservice.adapter.out.persistence.MoneyMapper;
 import com.willd.moneyservice.application.port.in.command.DecreaseMemberMoneyCommand;

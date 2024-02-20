@@ -77,8 +77,8 @@ public class BankServiceAdapter implements BankPort {
                         getBankAccount(fromMembershipId),
                         getBankAccount(toMembershipId)
                 )
-                .filter(tuple -> tuple.getT1().getLinkedStatusIsValid() && tuple.getT2().getLinkedStatusIsValid())
                 .switchIfEmpty(Mono.error(new RuntimeException("")))
+                .filter(tuple -> tuple.getT1().getLinkedStatusIsValid() && tuple.getT2().getLinkedStatusIsValid())
                 .flatMap(tuple -> {
                     RegisteredBankAccount fromBankAccount = tuple.getT1();
                     RegisteredBankAccount toBankAccount = tuple.getT2();
@@ -89,6 +89,8 @@ public class BankServiceAdapter implements BankPort {
                             toBankAccount.getBankAccountNumber(),
                             amount
                     );
-                }).filter(it -> it).switchIfEmpty(Mono.error(new RuntimeException("")));
+                })
+                .filter(it -> it)
+                .switchIfEmpty(Mono.error(new RuntimeException("")));
     }
 }

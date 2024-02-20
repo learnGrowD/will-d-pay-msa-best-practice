@@ -1,4 +1,4 @@
-package com.willd.remittance.adapter.out.persistence;
+package com.willd.remittance.domain;
 
 import com.willd.domain.remittance.enums.RemittanceRequestStatus;
 import com.willd.domain.remittance.enums.RemittanceRequestType;
