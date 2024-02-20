@@ -1,0 +1,193 @@
+version: '3'
+services:
+  zookeeper:
+    image: 'arm64v8/zookeeper:3.8'
+    networks:
+      - willd_network
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - ZOO_TLS_CLIENT_AUTH=none
+      - ZOO_TLS_QUORUM_CLIENT_AUTH=none
+  kafka:
+    image: 'wurstmeister/kafka:2.13-2.8.1'
+    networks:
+      - willd_network
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=LC:PLAINTEXT,LX:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LC
+      - KAFKA_LISTENERS=LC://kafka:29092,LX://localhost:9092
+      - KAFKA_ADVERTISED_LISTENERS=LC://kafka:29092,LX://localhost:9092
+    depends_on:
+      - zookeeper
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    networks:
+      - willd_network
+    ports:
+      - "8989:8080"
+    restart: always
+    depends_on:
+      - kafka
+      - zookeeper
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+  logging-consumer:
+    image: devwilld/cqrs-practice-logging-consumer:1.0.0
+    ports:
+      - "8078:8080"
+    networks:
+      - willd_network
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+  task-consumer:
+    image: devwilld/cqrs-practice-task-consumer:1.0.0
+    ports:
+      - "8079:8080"
+    networks:
+      - willd_network
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=positive0302*
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+      - TASK_TOPIC=fastcampus.task.topic
+      - TASK_RESULT_TOPIC=fastcampus.task.result.topic
+  membership-service:
+    image: devwilld/cqrs-practice-membership-service:1.0.0
+    networks:
+      - willd_network
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=positive0302*
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+      - TASK_TOPIC=fastcampus.task.topic
+      - TASK_RESULT_TOPIC=fastcampus.task.result.topic
+
+  banking-service:
+    image: devwilld/cqrs-practice-banking-service:1.0.0
+    networks:
+      - willd_network
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=positive0302*
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+      - SERVICE_MEMBERSHIP_URL=http://membership-service:8080
+  money-service:
+    image: devwilld/cqrs-practice-money-service:1.0.0
+    networks:
+      - willd_network
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=positive0302*
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+      - TASK_TOPIC=fastcampus.task.topic
+      - TASK_RESULT_TOPIC=fastcampus.task.result.topic
+      - SERVICE_MEMBERSHIP_URL=http://membership-service:8080
+      - SERVICE_BANKING_URL=http://banking-service:8080
+      - MY_CORP_BANK_ACCOUNT_NUMBER=110-468-788592c
+  remittance-service:
+    image: devwilld/cqrs-practice-remittance-service:1.0.0
+    networks:
+      - willd_network
+    ports:
+      - "8083:8080"
+    environment:
+      - SPRING_R2DBC_URL=r2dbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      - SPRING_R2DBC_USERNAME=root
+      - SPRING_R2DBC_PASSWORD=positive0302*
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+      - SERVICE_MEMBERSHIP_URL=http://membership-service:8080
+      - SERVICE_BANKING_URL=http://banking-service:8080
+      - SERVICE_MONEY_URL=http://money-service:8080
+  franchise-service:
+    image: devwilld/cqrs-practice-franchise-service:1.0.0
+    networks:
+      - willd_network
+    ports:
+      - "8084:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=positive0302*
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+  payment-service:
+    image: devwilld/cqrs-practice-payment-service:1.0.0
+    networks:
+      - willd_network
+    ports:
+      - "8085:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=positive0302*
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+  settlement-service:
+    image: devwilld/cqrs-practice-settlement-service:1.0.0
+    networks:
+      - willd_network
+    ports:
+      - "8086:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/fastcampus_pay?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=positive0302*
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=fastcampus.logging.out.stdout
+
+networks:
+  willd_network:
+    driver: bridge

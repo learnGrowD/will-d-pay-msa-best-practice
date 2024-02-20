@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'com.palantir.docker' version '0.35.0'
+}
+
+def dockerHubName = 'devwilld'
+group = 'com.will-d.membership-service'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':common')
+    implementation project(':domain')
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+docker {
+    println(tasks.bootJar.outputs.files)
+
+    name dockerHubName + '/' + rootProject.name + '-' + project.name + ':' + version
+
+    dockerfile file('../Dockerfile')
+
+    files tasks.bootJar.outputs.files
+
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
+}
+
